@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mean &amp; Ken | Wedding Celebration</title>
   <meta name="description" content="ขอเรียนเชิญร่วมฉลองมงคลสมรสของ Mean &amp; Ken วันที่ 29 พฤศจิกายน 2569">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -391,6 +392,7 @@
     }
 
     .intro { max-width: 660px; }
+    .intro-copy-mobile { display: none; }
 
     .morning-section {
       background: var(--morning-surface);
@@ -969,6 +971,8 @@
       .botanical-right { top: -110px; right: -155px; }
       .section { padding: 72px 22px; }
       .section h2, .rsvp-card h2 { font-size: 30px; }
+      .intro-copy-desktop { display: none; }
+      .intro-copy-mobile { display: block; }
 
       .morning-section { padding: 56px 14px; }
       .morning-card { padding: 54px 26px; }
@@ -1004,7 +1008,7 @@
         text-align: left;
         grid-template-columns: 52px 42px 1fr;
         align-items: center;
-        margin: 0 0 28px;
+        margin: 0 0 40px;
         display: grid;
       }
       .timeline .time { grid-row: 1/3; }
@@ -1061,7 +1065,17 @@
       <div class="reveal">
         <p class="section-kicker">WITH GREAT JOY</p>
         <h2 class="serif">ขอเรียนเชิญร่วม<br>ฉลองมงคลสมรส</h2>
-        <p>เราสองคนยินดีเป็นอย่างยิ่งที่จะได้แบ่งปันค่ำคืนแสนพิเศษนี้ร่วมกับทุกท่าน</p>
+        <p class="intro-copy-desktop">
+          ยินดีต้อนรับและขอขอบพระคุณแขกผู้มีเกียรติทุกท่าน<br>
+          ที่กรุณาสละเวลามาร่วมเป็นเกียรติและร่วมยินดีในวันสำคัญของ<br>
+          MEAN (ประอรฉัตร) และ KEN (จงรักษ์)
+        </p>
+        <p class="intro-copy-mobile">
+          ยินดีต้อนรับและขอขอบพระคุณ<br>
+          แขกผู้มีเกียรติทุกท่านที่กรุณาสละเวลา<br>
+          มาร่วมเป็นเกียรติและร่วมยินดีในวันสำคัญของ<br>
+          MEAN (ประอรฉัตร) และ KEN (จงรักษ์)
+        </p>
       </div>
     </section>
 
