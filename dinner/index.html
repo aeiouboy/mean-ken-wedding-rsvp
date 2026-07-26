@@ -81,6 +81,18 @@
       overflow: clip;
     }
 
+    .ambient-shader {
+      height: 100%;
+      inset: 0;
+      opacity: 0.68;
+      pointer-events: none;
+      position: absolute;
+      width: 100%;
+      z-index: 0;
+    }
+
+    .hero > :not(.ambient-shader) { z-index: 1; }
+
     .hero::before {
       content: "";
       pointer-events: none;
@@ -1001,6 +1013,14 @@
   <main>
     <!-- ===== HERO ===== -->
     <section class="hero">
+      <canvas
+        class="ambient-shader"
+        data-ambient-shader
+        data-base="#f7f3e9"
+        data-tint="#ead9b8"
+        data-glow="#d9b9a0"
+        aria-hidden="true"
+      ></canvas>
       <div class="botanical botanical-left" aria-hidden="true"></div>
       <div class="botanical botanical-right" aria-hidden="true"></div>
 
@@ -1176,6 +1196,7 @@
     </footer>
   </main>
 
+  <script src="../shader.js"></script>
   <script>
     /* ===== Choice Card Selection ===== */
     document.querySelectorAll('.choice-card').forEach(function(card) {
