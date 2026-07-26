@@ -37,6 +37,7 @@
     'uniform vec3 u_base;',
     'uniform vec3 u_tint;',
     'uniform vec3 u_glow;',
+    'uniform float u_prism;',
     'void main() {',
     '  vec2 uv = gl_FragCoord.xy / u_resolution.xy;',
     '  float aspect = u_resolution.x / u_resolution.y;',
@@ -51,12 +52,18 @@
     '  float innerRipple = sin((radius + bend) * 38.0 - t - 0.75);',
     '  float warmRidge = smoothstep(0.08, 0.95, ripple);',
     '  float coolRidge = smoothstep(0.22, 0.98, innerRipple);',
+    '  float hardRidge = smoothstep(0.48, 0.82, ripple);',
+    '  float fanAngle = atan(point.y, point.x);',
+    '  float fanSlices = smoothstep(0.18, 0.82, sin(fanAngle * 17.0 + radius * 13.0 - t * 0.28));',
     '  float diagonal = fract((point.x - point.y) * 8.0 + radius * 4.0 - t * 0.08);',
     '  float silkFold = smoothstep(0.08, 0.62, diagonal) * (1.0 - smoothstep(0.62, 0.96, diagonal));',
     '  float vignette = smoothstep(0.82, 0.10, radius);',
+    '  float warmShape = mix(warmRidge * 0.48, hardRidge * 0.72, u_prism);',
+    '  float coolShape = mix(coolRidge * 0.34, coolRidge * 0.48, u_prism);',
     '  vec3 color = u_base;',
-    '  color = mix(color, u_tint, warmRidge * vignette * 0.48);',
-    '  color = mix(color, u_glow, coolRidge * vignette * 0.34);',
+    '  color = mix(color, u_tint, warmShape * vignette);',
+    '  color = mix(color, u_glow, coolShape * vignette);',
+    '  color = mix(color, u_glow, fanSlices * vignette * u_prism * 0.20);',
     '  color = mix(color, vec3(1.0), silkFold * vignette * 0.20);',
     '  color *= 1.0 - (1.0 - silkFold) * vignette * 0.025;',
     '  float grain = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);',
@@ -111,6 +118,10 @@
   colorUniform('u_base', canvas.dataset.base);
   colorUniform('u_tint', canvas.dataset.tint);
   colorUniform('u_glow', canvas.dataset.glow);
+  gl.uniform1f(
+    gl.getUniformLocation(program, 'u_prism'),
+    canvas.dataset.prism === 'true' ? 1 : 0
+  );
 
   function resize() {
     var ratio = Math.min(window.devicePixelRatio || 1, 1.5);
