@@ -1213,6 +1213,13 @@
             </div>
           </fieldset>
 
+          <div class="additional-fields" id="wishesFields">
+            <label class="field">
+              <span>ฝากคำแสดงความยินดีถึงคู่บ่าวสาว</span>
+              <textarea id="wishes" name="wishes" placeholder="พิมพ์คำอวยพรของท่านที่นี่"></textarea>
+            </label>
+          </div>
+
           <div class="additional-fields" id="additionalFields">
             <p class="section-kicker">YOUR DETAILS</p>
 
@@ -1287,6 +1294,7 @@
         var value = this.getAttribute('data-value');
         document.getElementById('attendanceValue').value = value;
         document.getElementById('additionalFields').classList.toggle('visible', value === 'yes');
+        document.getElementById('wishesFields').classList.toggle('visible', value === 'no');
       });
     });
 
@@ -1312,7 +1320,8 @@
         phone: document.getElementById('phone').value.trim(),
         address: document.getElementById('address').value.trim(),
         guests: otherGuests || (selectedGuests ? selectedGuests.value : ''),
-        dietary: dietary
+        dietary: dietary,
+        wishes: document.getElementById('wishes').value.trim()
       };
 
       if (!formData.attending) {
@@ -1357,6 +1366,7 @@
       payload.set('phone', formData.phone);
       payload.set('address', formData.address);
       payload.set('guests', formData.guests);
+      payload.set('wishes', formData.wishes);
       formData.dietary.forEach(function(item) {
         payload.append('dietary', item);
       });
@@ -1377,6 +1387,7 @@
           document.getElementById('rsvpForm').reset();
           document.getElementById('attendanceValue').value = '';
           document.getElementById('additionalFields').classList.remove('visible');
+          document.getElementById('wishesFields').classList.remove('visible');
           document.querySelectorAll('.choice-card').forEach(function(card) {
             card.classList.remove('selected');
             card.setAttribute('aria-pressed', 'false');
