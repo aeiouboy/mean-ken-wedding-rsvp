@@ -52,22 +52,28 @@
     '  float innerRipple = sin((radius + bend) * 38.0 - t - 0.75);',
     '  float warmRidge = smoothstep(0.08, 0.95, ripple);',
     '  float coolRidge = smoothstep(0.22, 0.98, innerRipple);',
-    '  vec2 fanPoint = vec2((uv.x + 0.12) * aspect, uv.y + 0.10);',
+    '  vec2 fanPoint = vec2((uv.x + 0.15) * aspect, uv.y + 0.25);',
     '  float fanRadius = length(fanPoint);',
-    '  float fanAngle = atan(fanPoint.y, fanPoint.x);',
-    '  float fanSlices = smoothstep(0.48, 0.94, sin(fanAngle * 9.0 + 3.40 - t * 0.10));',
+    '  float fanAngle = atan(fanPoint.x, fanPoint.y);',
+    '  float sway = 0.28 * sin(u_time * 0.30) + 0.14 * sin(u_time * 0.095);',
+    '  float fanSlices = smoothstep(0.10, 0.95, sin(fanAngle * 14.0 + 2.0 + sway * 3.0));',
+    '  float flickerA = sin(fanAngle * 25.0 + 1.3) * sin(u_time * 1.25);',
+    '  float flickerB = sin(fanAngle * 13.0 + 4.1) * sin(u_time * 0.85 + 1.0);',
+    '  float shimmer = 0.58 + 0.28 * flickerA + 0.16 * flickerB;',
+    '  float stream = 0.62 + 0.38 * sin(fanRadius * 9.0 - u_time * 1.9);',
+    '  float beam = fanSlices * shimmer * stream;',
     '  float diagonal = fract((point.x - point.y) * 8.0 + radius * 4.0 - t * 0.08);',
     '  float silkFold = smoothstep(0.08, 0.62, diagonal) * (1.0 - smoothstep(0.62, 0.96, diagonal));',
     '  float vignette = smoothstep(0.82, 0.10, radius);',
-    '  float fanMask = smoothstep(1.85, 0.24, fanRadius);',
+    '  float fanMask = smoothstep(2.7, 0.3, fanRadius);',
     '  float shapeMask = mix(vignette, fanMask, u_prism);',
-    '  float warmShape = mix(warmRidge * 0.48, fanSlices * 0.36, u_prism);',
-    '  float coolShape = mix(coolRidge * 0.34, fanSlices * 0.09, u_prism);',
+    '  float warmShape = mix(warmRidge * 0.48, beam * 0.48, u_prism);',
+    '  float coolShape = mix(coolRidge * 0.34, beam * 0.10, u_prism);',
     '  vec3 color = u_base;',
     '  color = mix(color, u_tint, warmShape * shapeMask);',
     '  color = mix(color, u_glow, coolShape * shapeMask);',
-    '  color = mix(color, vec3(1.0), fanSlices * fanMask * u_prism * 0.16);',
-    '  color *= 1.0 - (1.0 - fanSlices) * fanMask * u_prism * 0.12;',
+    '  color = mix(color, vec3(1.0), beam * fanMask * u_prism * 0.26);',
+    '  color *= 1.0 - (1.0 - fanSlices) * fanMask * u_prism * 0.10;',
     '  color = mix(color, vec3(1.0), silkFold * vignette * (1.0 - u_prism) * 0.20);',
     '  color *= 1.0 - (1.0 - silkFold) * vignette * (1.0 - u_prism) * 0.025;',
     '  float grain = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);',
@@ -140,19 +146,13 @@
   }
 
   var start = performance.now();
-  var frame;
 
   function render(now) {
     resize();
     gl.uniform1f(time, (now - start) / 1000);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
-    if (!document.hidden) frame = requestAnimationFrame(render);
+    requestAnimationFrame(render);
   }
 
-  document.addEventListener('visibilitychange', function() {
-    cancelAnimationFrame(frame);
-    if (!document.hidden) frame = requestAnimationFrame(render);
-  });
-
-  frame = requestAnimationFrame(render);
+  requestAnimationFrame(render);
 })();
