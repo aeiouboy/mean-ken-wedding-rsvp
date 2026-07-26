@@ -47,6 +47,17 @@
       }
     }
 
+    @media print {
+      .ambient-shader, .particles { display: none !important; }
+      .eyebrow, .monogram, .hero h1, .thai-names, .ornament,
+      .date-en, .date-th, .scroll-cue, .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
     body {
       background: var(--ivory);
       color: var(--ink);
@@ -563,7 +574,7 @@
       content: "";
       border-top: 1px solid var(--line);
       position: absolute;
-      top: 47px;
+      top: 55px;
       left: 16%;
       right: 16%;
     }
@@ -580,28 +591,37 @@
       font: 500 18px 'Prompt', sans-serif;
     }
 
-    .dot {
-      background: var(--gold);
-      border: 3px solid var(--ivory);
-      width: 12px;
-      height: 12px;
-      box-shadow: 0 0 0 1px var(--gold), 0 0 12px var(--gold-glow);
+    .timeline-icon {
+      color: var(--morning-rose);
+      background: color-mix(in srgb, var(--paper) 88%, var(--morning-surface));
+      border: 1px solid var(--morning-line);
+      width: 38px;
+      height: 38px;
+      box-shadow: 0 5px 18px rgba(126,80,85,0.12), inset 0 0 0 3px rgba(255,253,248,0.65);
       z-index: 1;
       border-radius: 50%;
-      margin: 19px 0 21px;
-      transition: box-shadow 0.3s;
+      margin: 9px 0 14px;
+      display: grid;
+      place-items: center;
     }
 
-    .timeline > div:hover .dot {
-      box-shadow: 0 0 0 1px var(--gold), 0 0 24px rgba(181,150,83,0.35);
+    .timeline-icon svg {
+      width: 21px;
+      height: 21px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .timeline h3 {
       margin: 0 0 5px;
-      font: italic 500 24px 'Cormorant Garamond', Georgia, serif;
+      font: italic 500 21px 'Cormorant Garamond', Georgia, serif;
       white-space: nowrap;
     }
 
+    .timeline h3.long-title { font-size: 18px; }
     .timeline p { font-size: 13px; white-space: nowrap; }
 
     /* ========== DRESS CODE ========== */
@@ -954,19 +974,20 @@
       .timeline::before {
         border: 0;
         border-left: 1px solid var(--line);
-        inset: 15px auto 15px 79px;
+        inset: 19px auto 19px 83px;
       }
       .timeline > div {
         text-align: left;
-        grid-template-columns: 62px 35px 1fr;
+        grid-template-columns: 62px 42px 1fr;
         align-items: center;
         margin: 0 0 28px;
         display: grid;
       }
-      .timeline .time, .timeline .dot { grid-row: 1/3; }
-      .timeline .dot { margin: auto; }
+      .timeline .time, .timeline .timeline-icon { grid-row: 1/3; }
+      .timeline .timeline-icon { margin: auto; }
       .timeline h3, .timeline p { grid-column: 3; margin: 0; }
       .timeline h3 { font-size: 20px; }
+      .timeline h3.long-title { font-size: 16px; }
     }
 
     /* ========== MOBILE ========== */
@@ -1008,19 +1029,20 @@
       .timeline::before {
         border: 0;
         border-left: 1px solid var(--line);
-        inset: 15px auto 15px 69px;
+        inset: 19px auto 19px 73px;
       }
       .timeline > div {
         text-align: left;
-        grid-template-columns: 52px 35px 1fr;
+        grid-template-columns: 52px 42px 1fr;
         align-items: center;
         margin: 0 0 28px;
         display: grid;
       }
       .timeline .time { grid-row: 1/3; }
-      .timeline .dot { grid-row: 1/3; margin: auto; }
+      .timeline .timeline-icon { grid-row: 1/3; margin: auto; }
       .timeline h3, .timeline p { grid-column: 3; margin: 0; }
       .timeline h3 { font-size: 18px; }
+      .timeline h3.long-title { font-size: 14px; letter-spacing: -0.01em; }
       .timeline p { font-size: 12px; }
 
       .swatches span { width: 36px; height: 36px; }
@@ -1105,31 +1127,39 @@
     <!-- ===== TIMELINE ===== -->
     <section class="section timeline-section">
       <div class="reveal">
-        <p class="section-kicker">ORDER OF CELEBRATION</p>
+        <p class="section-kicker">ORDER OF CEREMONY</p>
         <h2 class="serif">กำหนดการ</h2>
       </div>
       <div class="timeline reveal reveal-delay-1">
         <div>
           <span class="time">08:30</span>
-          <span class="dot"></span>
-          <h3 class="serif">Registration</h3>
+          <span class="timeline-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M8 4.5h8M9 3h6v3H9zM7 5.5H5.5v15h13v-15H17"/><path d="m8 13 2 2 5-5"/></svg>
+          </span>
+          <h3 class="serif">Guest Registration</h3>
           <p>ลงทะเบียนร่วมงาน</p>
         </div>
         <div>
           <span class="time">09:00</span>
-          <span class="dot"></span>
-          <h3 class="serif">Engagement</h3>
+          <span class="timeline-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="8.5" cy="13.5" r="5"/><circle cx="15.5" cy="13.5" r="5"/><path d="m12 4 2.5 3H9.5L12 4Z"/></svg>
+          </span>
+          <h3 class="serif long-title">Engagement &amp; Ring Exchange Ceremony</h3>
           <p>พิธีหมั้นและแลกแหวน</p>
         </div>
         <div>
           <span class="time">09:45</span>
-          <span class="dot"></span>
+          <span class="timeline-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5 10h11v3.5a5.5 5.5 0 0 1-11 0V10Z"/><path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H16M4 20h14M8 7c0-1 1-1 1-2M12 7c0-1 1-1 1-2"/></svg>
+          </span>
           <h3 class="serif">Tea Ceremony</h3>
           <p>พิธีชงน้ำชา</p>
         </div>
         <div>
           <span class="time">11:00</span>
-          <span class="dot"></span>
+          <span class="timeline-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 6V4M9 4h6M5 20h14M3.5 9v10M2.5 9h2M20.5 9v10M19.5 9h2"/></svg>
+          </span>
           <h3 class="serif">Lunch</h3>
           <p>ร่วมรับประทานอาหารกลางวัน <span class="keep-together">(โต๊ะจีน)</span></p>
         </div>
